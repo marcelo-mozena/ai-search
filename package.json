@@ -1,6 +1,7 @@
 {
   "name": "ai-search",
   "version": "1.0.0",
+  "type": "module",
   "description": "A lightweight Electron app with CQRS architecture, TypeScript, React, and shadcn/ui",
   "main": "dist-electron/main.js",
   "scripts": {

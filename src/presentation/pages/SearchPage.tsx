@@ -31,7 +31,7 @@ export function SearchPage() {
     try {
       // Execute command (write operation)
       const command = new SearchCommand(query)
-      const commandResult = await container.commandBus.execute('SearchCommand', command)
+      const commandResult = await container.commandBus.execute<SearchCommand, { id: string }>('SearchCommand', command)
 
       if (commandResult.isFailure) {
         setError(commandResult.error)
@@ -40,14 +40,14 @@ export function SearchPage() {
 
       // Execute query (read operation)
       const searchQuery = new GetSearchResultsQuery(commandResult.value.id)
-      const queryResult = await container.queryBus.execute('GetSearchResultsQuery', searchQuery)
+      const queryResult = await container.queryBus.execute<GetSearchResultsQuery, any[]>('GetSearchResultsQuery', searchQuery)
 
       if (queryResult.isFailure) {
         setError(queryResult.error)
         return
       }
 
-      setResults(queryResult.value)
+      setResults(queryResult.value as any[])
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An error occurred')
     } finally {
