@@ -20,41 +20,42 @@ Connect to a remote machine via SSH and develop directly on that machine.
 - Leverage remote machine's resources
 - Keep development environment isolated
 
-### 2. Remote - Containers
+### 2. Remote - Containers (✅ Configured)
 
 Develop inside a Docker container with a consistent development environment.
 
-**Setup:**
-1. Install Docker Desktop
-2. Install "Remote - Containers" extension in VSCode
-3. Create `.devcontainer/devcontainer.json`:
+**This project is now configured with a complete dev container setup!**
 
-```json
-{
-  "name": "AI Search Dev Container",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:18",
-  "customizations": {
-    "vscode": {
-      "extensions": [
-        "dbaeumer.vscode-eslint",
-        "esbenp.prettier-vscode",
-        "bradlc.vscode-tailwindcss",
-        "ms-vscode.vscode-typescript-next"
-      ]
-    }
-  },
-  "forwardPorts": [5173],
-  "postCreateCommand": "npm install",
-  "remoteUser": "node"
-}
-```
+**Quick Start:**
+1. Install [Docker Desktop](https://www.docker.com/products/docker-desktop)
+2. Install "Dev Containers" extension in VSCode (extension ID: `ms-vscode-remote.remote-containers`)
+3. Open this project in VSCode
+4. Click "Reopen in Container" when prompted, or:
+   - Press F1
+   - Select "Dev Containers: Reopen in Container"
+5. Wait for the container to build (first time only)
+6. Start developing!
 
-4. Press F1 and select "Remote-Containers: Reopen in Container"
+**What's Included:**
+- Node.js 20 with TypeScript support
+- All recommended VSCode extensions pre-installed
+- Electron development dependencies
+- Automatic `npm install` on container creation
+- Port forwarding for Vite dev server (port 5173)
+- SSH key mounting for Git operations
+- Git safe directory configuration
+
+**Configuration Files:**
+- `.devcontainer/devcontainer.json` - Main configuration
+- `.devcontainer/Dockerfile` - Custom image with Electron support
+- `.devcontainer/docker-compose.yml` - Advanced orchestration (optional)
 
 **Benefits:**
-- Consistent development environment
-- Easy onboarding for new developers
-- Isolated from host system
+- ✅ Consistent development environment across all machines
+- ✅ Easy onboarding for new developers (zero local setup)
+- ✅ Isolated from host system
+- ✅ No "works on my machine" issues
+- ✅ Pre-configured with all tools and extensions
 
 ### 3. Remote - WSL
 

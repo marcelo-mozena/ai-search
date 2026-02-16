@@ -1,23 +1,25 @@
 import { ICommandHandler } from '../command-bus'
 import { SearchCommand } from './search-command'
 import { Result } from '@domain/result'
+import { exaSearch } from '@infrastructure/exa-service'
+import type { ExaSearchResponse } from '@domain/exa-types'
 
 /**
  * Handler for SearchCommand
- * Implements business logic for search operations
+ * Calls the Exa API and returns the full search response
  */
-export class SearchCommandHandler implements ICommandHandler<SearchCommand, { id: string }> {
-  async handle(command: SearchCommand): Promise<Result<{ id: string }>> {
+export class SearchCommandHandler implements ICommandHandler<SearchCommand, ExaSearchResponse> {
+  async handle(command: SearchCommand): Promise<Result<ExaSearchResponse>> {
     try {
-      // This is where you would implement actual search logic
-      console.log(`Executing search for: ${command.query}`)
-      
-      // Simulate search operation
-      const searchId = crypto.randomUUID()
-      
-      return Result.ok({ id: searchId })
+      console.log(`Executing Exa ${command.mode} for: "${command.query}"`)
+
+      const response = await exaSearch(command.query, command.mode)
+
+      return Result.ok(response)
     } catch (error) {
-      return Result.fail(`Search failed: ${error instanceof Error ? error.message : 'Unknown error'}`)
+      return Result.fail(
+        `Search failed: ${error instanceof Error ? error.message : 'Unknown error'}`
+      )
     }
   }
 }

@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ..:/workspace:cached
+      - ~/.ssh:/home/node/.ssh:ro
+    command: sleep infinity
+    network_mode: service:host
+    environment:
+      - DISPLAY=${DISPLAY:-:0}
+    user: node
+
+  # Optional: Add a database service if needed in the future
+  # postgres:
+  #   image: postgres:15
+  #   restart: unless-stopped
+  #   volumes:
+  #     - postgres-data:/var/lib/postgresql/data
+  #   environment:
+  #     POSTGRES_PASSWORD: postgres
+  #     POSTGRES_USER: postgres
+  #     POSTGRES_DB: ai_search
+
+# volumes:
+#   postgres-data:
